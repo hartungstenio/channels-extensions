@@ -11,9 +11,6 @@ authors = [
 keywords = ["django"]
 classifiers = [
   "Development Status :: 4 - Beta",
-  "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.0",
-  "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
   "Programming Language :: Python",
@@ -25,11 +22,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "asgiref>=3.3",
+  "asgiref",
   "asyncio-extensions",
   "channels",
   "django>=5.2",
-  "typing-extensions; python_version<'3.12'"
 ]
 dynamic = ["version"]
 
@@ -103,14 +99,6 @@ extra-dependencies = [
 python = ["3.11", "3.12", "3.13", "3.14"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
-django = ["4.2"]
-python = ["3.11", "3.12", "3.13"]
-
-[[tool.hatch.envs.hatch-test.matrix]]
-django = ["5.0", "5.1"]
-python = ["3.11", "3.12"]
-
-[[tool.hatch.envs.hatch-test.matrix]]
 django = ["5.2"]
 python = ["3.11", "3.12", "3.13", "3.14"]
 
@@ -120,9 +108,6 @@ python = ["3.12", "3.13", "3.14"]
 
 [tool.hatch.envs.hatch-test.overrides]
 matrix.django.dependencies = [
-  { value = "django>=4.2,<5.0", if = ["4.2"] },
-  { value = "django>=5.0,<5.1", if = ["5.0"] },
-  { value = "django>=5.1,<5.2", if = ["5.1"] },
   { value = "django>=5.2,<6.0", if = ["5.2"] },
   { value = "django>=6.0,<6.1", if = ["6.0"] },
 ]
