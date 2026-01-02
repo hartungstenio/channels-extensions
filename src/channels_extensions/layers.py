@@ -1,5 +1,5 @@
 import re
-from typing import Any, override
+from typing import Any
 
 from asyncio_extensions import checkpoint, sleep_forever
 from channels import DEFAULT_CHANNEL_LAYER
@@ -7,6 +7,8 @@ from channels.layers import BaseChannelLayer
 from channels.layers import get_channel_layer as original_get_channel_layer
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.crypto import get_random_string
+
+from ._compat import override
 
 
 class DummyChannelLayer(BaseChannelLayer):
