@@ -29,6 +29,34 @@ CHANNEL_LAYERS = {
 ### get_channel_layer
 This is simply a version of channels `get_channel_layer`, but it raises an `ImproperlyConfigured` if the alias does not exist.
 
+### CurrentSiteMiddleware
+A middleware that mimics django's `CurrentSiteMiddleware`. It adds a `site` key to the scope:
+```python
+class EchoSiteConsumer(AsyncConsumer):
+    async def websocket_connect(self, event):
+        await self.send({
+            "type": "websocket.accept",
+        })
+
+    async def websocket_receive(self, event):
+        await self.send({
+            "type": "websocket.send",
+            "text": self.scope["site"],
+        })
+
+application = ProtocolTypeRouter({
+    "websocket": AllowedHostsOriginValidator(
+        AuthMiddlewareStack(
+            CurrentSiteMiddleware(
+                URLRouter([
+                    path("echo/", EchoSiteConsumer.as_asgi()),
+                ])
+            )
+        )
+    ),
+})
+```
+
 ## License
 
 `channels-extensions` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.

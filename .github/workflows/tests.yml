@@ -34,6 +34,9 @@ jobs:
       - name: Run static analysis
         run: hatch fmt --check
 
+      - name: Run type checker
+        run: hatch run mypy src/
+
       - name: Run tests
         run: |
           hatch test -i py=${{ matrix.python-version }} --cover

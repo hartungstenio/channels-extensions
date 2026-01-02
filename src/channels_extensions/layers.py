@@ -2,6 +2,7 @@ import re
 from typing import Any, override
 
 from asyncio_extensions import checkpoint, sleep_forever
+from channels import DEFAULT_CHANNEL_LAYER
 from channels.layers import BaseChannelLayer
 from channels.layers import get_channel_layer as original_get_channel_layer
 from django.core.exceptions import ImproperlyConfigured
@@ -71,7 +72,7 @@ class DummyChannelLayer(BaseChannelLayer):
         await checkpoint()
 
 
-def get_channel_layer(alias: str = "default") -> BaseChannelLayer:
+def get_channel_layer(alias: str = DEFAULT_CHANNEL_LAYER) -> BaseChannelLayer:
     """Returns a channel layer by alias.
 
     This is a wrapper around :func:`channels.layers.get_channel_layer` that throws an error for

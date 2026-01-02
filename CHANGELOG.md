@@ -13,6 +13,7 @@ This project adheres to both [Semantic Versioning](https://semver.org/spec/v2.0.
 - This CHANGELOG file.
 - `DummyChannelLayer` empty channel layer implementation
 - `get_channel_layer` shortcut which raises an error for missing aliases
+- `CurrentSiteMiddleware` that mimics django's own `CurrentSiteMiddleware`
 
 [unreleased]: https://github.com/hartungstenio/asyncio-extensions/compare/0.0.1...HEAD
 [0.0.1]: https://github.com/hartungstenio/asyncio-extensions/releases/tag/0.0.1
