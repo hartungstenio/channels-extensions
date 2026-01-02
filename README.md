@@ -5,16 +5,29 @@
 
 -----
 
-## Table of Contents
-
-- [Installation](#installation)
-- [License](#license)
-
 ## Installation
 
 ```console
 pip install channels-extensions
 ```
+
+## Usage
+
+### DummyChannelLayer
+```DummyChannelLayer``` is an noop (almost) implementation of `BaseChannelLayer`. Messages sent to it are never available, and `receive` never returns.
+
+All methods work as checkpoints to the event loop, yielding control back to it at least once.
+
+```python
+CHANNEL_LAYERS = {
+    "dummy": {
+        "BACKEND": "channels_extensions.layers.DummyChannelLayer",
+    }
+}
+```
+
+### get_channel_layer
+This is simply a version of channels `get_channel_layer`, but it raises an `ImproperlyConfigured` if the alias does not exist.
 
 ## License
 
