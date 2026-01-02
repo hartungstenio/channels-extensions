@@ -30,6 +30,9 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+otel = ["opentelemetry-api", "opentelemetry-semantic-conventions"]
+
 [project.urls]
 Documentation = "https://github.com/hartungstenio/channels-extensions#readme"
 Issues = "https://github.com/hartungstenio/channels-extensions/issues"
@@ -88,6 +91,7 @@ source = "vcs"
 
 [tool.hatch.envs.default]
 dependency-groups = ["dev"]
+features = ["otel"]
 
 [tool.hatch.envs.hatch-test]
 extra-dependencies = [
