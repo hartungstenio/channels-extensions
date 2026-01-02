@@ -28,7 +28,7 @@ class DummyChannelLayer(BaseChannelLayer):
         super().__init__(expiry, capacity, channel_capacity)
 
     @override
-    async def send(self, channel: str, message: dict[str, Any]) -> None:
+    async def send(self, channel: str, message: dict[str, Any]) -> None:  # noqa: ARG002
         """
         Send a message onto a (general or specific) channel.
 
@@ -37,7 +37,7 @@ class DummyChannelLayer(BaseChannelLayer):
         await checkpoint()
 
     @override
-    async def receive(self, channel: str) -> dict[str, Any]:
+    async def receive(self, channel: str) -> dict[str, Any]:  # noqa: ARG002
         """
         Receive the first message that arrives on the channel.
 
@@ -59,17 +59,17 @@ class DummyChannelLayer(BaseChannelLayer):
         await checkpoint()
 
     @override
-    async def group_add(self, group: str, channel: str) -> None:
+    async def group_add(self, group: str, channel: str) -> None:  # noqa: ARG002
         """Add a channel to the group."""
         await checkpoint()
 
     @override
-    async def group_discard(self, group: str, channel: str) -> None:
+    async def group_discard(self, group: str, channel: str) -> None:  # noqa: ARG002
         """Remove the channel from the group."""
         await checkpoint()
 
     @override
-    async def group_send(self, group: str, message: dict[str, Any]) -> None:
+    async def group_send(self, group: str, message: dict[str, Any]) -> None:  # noqa: ARG002
         """Send a message to the group."""
         await checkpoint()
 

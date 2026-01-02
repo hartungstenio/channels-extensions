@@ -116,7 +116,7 @@ matrix.django.dependencies = [
 [tool.hatch.envs.hatch-static-analysis]
 skip-install = false
 config-path = "ruff_defaults.toml"
-dependencies = ["ruff==0.14.7"]
+dependencies = ["ruff==0.14.10"]
 
 [tool.mypy]
 plugins = ["mypy_django_plugin.main"]
