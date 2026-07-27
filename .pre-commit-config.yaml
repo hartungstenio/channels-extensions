@@ -30,14 +30,14 @@ repos:
       - id: trailing-whitespace
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.13
+    rev: v0.16.0
     hooks:
       - id: ruff
         args: [--fix]
       - id: ruff-format
 
   - repo: https://github.com/adamchainz/django-upgrade
-    rev: "1.30.0"
+    rev: "1.31.1"
     hooks:
       - id: django-upgrade
         args: [--target-version, "5.2"]
