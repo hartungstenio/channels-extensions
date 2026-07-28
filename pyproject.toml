@@ -30,6 +30,9 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+orjson = ["django-orjson"]
+
 [project.urls]
 Documentation = "https://github.com/hartungstenio/channels-extensions#readme"
 Issues = "https://github.com/hartungstenio/channels-extensions/issues"
@@ -87,9 +90,11 @@ exclude = ["/.devcontainer", "/.github"]
 source = "vcs"
 
 [tool.hatch.envs.default]
+features = ["orjson"]
 dependency-groups = ["dev"]
 
 [tool.hatch.envs.hatch-test]
+features = ["orjson"]
 extra-dependencies = [
   "faker",
   "pytest-asyncio",
