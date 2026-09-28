@@ -34,27 +34,36 @@ A middleware that mimics django's `CurrentSiteMiddleware`. It adds a `site` key 
 ```python
 class EchoSiteConsumer(AsyncConsumer):
     async def websocket_connect(self, event):
-        await self.send({
-            "type": "websocket.accept",
-        })
+        await self.send(
+            {
+                "type": "websocket.accept",
+            }
+        )
 
     async def websocket_receive(self, event):
-        await self.send({
-            "type": "websocket.send",
-            "text": self.scope["site"],
-        })
-
-application = ProtocolTypeRouter({
-    "websocket": AllowedHostsOriginValidator(
-        AuthMiddlewareStack(
-            CurrentSiteMiddleware(
-                URLRouter([
-                    path("echo/", EchoSiteConsumer.as_asgi()),
-                ])
-            )
+        await self.send(
+            {
+                "type": "websocket.send",
+                "text": self.scope["site"],
+            }
         )
-    ),
-})
+
+
+application = ProtocolTypeRouter(
+    {
+        "websocket": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(
+                CurrentSiteMiddleware(
+                    URLRouter(
+                        [
+                            path("echo/", EchoSiteConsumer.as_asgi()),
+                        ]
+                    )
+                )
+            )
+        ),
+    }
+)
 ```
 
 ## License
