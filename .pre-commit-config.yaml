@@ -29,6 +29,15 @@ repos:
       - id: no-commit-to-branch
       - id: trailing-whitespace
 
+  - repo: local
+    hooks:
+      - id: actions-lock
+        name: verify GitHub Actions lockfile
+        entry: gh actions-lock --verify-local --no-fix
+        language: system
+        files: ^\.github/workflows/
+        pass_filenames: false
+
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.17.5
     hooks:
@@ -41,3 +50,6 @@ repos:
     hooks:
       - id: django-upgrade
         args: [--target-version, "5.2"]
+
+ci:
+  skip: [actions-lock]

@@ -33,6 +33,13 @@
 - Order test classes and methods to match the definition order in the corresponding source file.
 - Tests that touch the database need `pytest.mark.django_db`; use mocks for ASGI `receive`/`send`/`inner`.
 
+## GitHub Actions
+
+- Every action used in `.github/workflows/` (and local `action.yml` files) is pinned by `.github/workflows/actions.lock`, managed by the `gh actions-lock` extension.
+- After editing a workflow or `action.yml`, run `gh actions-lock` and commit the lockfile in the same change. Never edit `actions.lock` by hand.
+- Check with `gh actions-lock --verify` (read-only). If a tag moved upstream, investigate before running `gh actions-lock --relock`; never use `--accept-moved` without confirming why the commit disappeared.
+- New workflows must declare minimal `permissions` and use `persist-credentials: false` on `actions/checkout`.
+
 ## Change Scope
 
 - Keep changes minimal and consistent with neighboring code.
