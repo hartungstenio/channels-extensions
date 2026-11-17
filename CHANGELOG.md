@@ -8,6 +8,10 @@ This project adheres to both [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ## [UNRELEASED]
 
+### Fixed
+
+- `JsonWebsocketConsumer.encode_json` now uses `django_orjson.default`, matching `AsyncJsonWebsocketConsumer`
+
 ## [0.0.1] - 2026-07-28
 
 ### Added

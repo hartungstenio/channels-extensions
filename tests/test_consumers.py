@@ -1,3 +1,5 @@
+import uuid
+
 import pytest
 
 from channels_extensions.consumers import AsyncJsonWebsocketConsumer, JsonWebsocketConsumer
@@ -19,6 +21,13 @@ class TestJsonWebsocketConsumer:
         assert isinstance(result, str)
         assert result == '{"type":"message","text":"hello"}'
 
+    def test_encode_json_uses_django_default(self) -> None:
+        value = uuid.UUID("12345678-1234-5678-1234-567812345678")
+
+        result = JsonWebsocketConsumer.encode_json({"id": value})
+
+        assert result == '{"id":"12345678-1234-5678-1234-567812345678"}'
+
 
 @pytest.mark.asyncio
 class TestAsyncJsonWebsocketConsumer:
@@ -36,3 +45,10 @@ class TestAsyncJsonWebsocketConsumer:
 
         assert isinstance(result, str)
         assert result == '{"type":"message","text":"hello"}'
+
+    async def test_encode_json_uses_django_default(self) -> None:
+        value = uuid.UUID("12345678-1234-5678-1234-567812345678")
+
+        result = await AsyncJsonWebsocketConsumer.encode_json({"id": value})
+
+        assert result == '{"id":"12345678-1234-5678-1234-567812345678"}'
