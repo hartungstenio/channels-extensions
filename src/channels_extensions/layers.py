@@ -1,3 +1,5 @@
+"""Channel layer implementations and helpers."""
+
 import re
 from typing import Any
 
@@ -25,10 +27,11 @@ class DummyChannelLayer(BaseChannelLayer):
         capacity: int = 100,
         channel_capacity: dict[re.Pattern[str] | str, int] | None = None,
     ) -> None:
+        """Initialize the layer; arguments are forwarded to :class:`~channels.layers.BaseChannelLayer`."""
         super().__init__(expiry, capacity, channel_capacity)
 
     @override
-    async def send(self, channel: str, message: dict[str, Any]) -> None:  # noqa: ARG002
+    async def send(self, channel: str, message: dict[str, Any]) -> None:
         """
         Send a message onto a (general or specific) channel.
 
@@ -37,7 +40,7 @@ class DummyChannelLayer(BaseChannelLayer):
         await checkpoint()
 
     @override
-    async def receive(self, channel: str) -> dict[str, Any]:  # noqa: ARG002
+    async def receive(self, channel: str) -> dict[str, Any]:
         """
         Receive the first message that arrives on the channel.
 
@@ -47,35 +50,32 @@ class DummyChannelLayer(BaseChannelLayer):
 
     @override
     async def new_channel(self, prefix: str = "specific") -> str:
-        """
-        Returns a new channel name that can be used by something in our
-        process as a specific channel.
-        """
+        """Return a new channel name that can be used as a specific channel in this process."""
         return f"{prefix}.null!{get_random_string(12)}"
 
     @override
     async def flush(self) -> None:
-        """Resets the channel layer to a blank state."""
+        """Reset the channel layer to a blank state."""
         await checkpoint()
 
     @override
-    async def group_add(self, group: str, channel: str) -> None:  # noqa: ARG002
+    async def group_add(self, group: str, channel: str) -> None:
         """Add a channel to the group."""
         await checkpoint()
 
     @override
-    async def group_discard(self, group: str, channel: str) -> None:  # noqa: ARG002
+    async def group_discard(self, group: str, channel: str) -> None:
         """Remove the channel from the group."""
         await checkpoint()
 
     @override
-    async def group_send(self, group: str, message: dict[str, Any]) -> None:  # noqa: ARG002
+    async def group_send(self, group: str, message: dict[str, Any]) -> None:
         """Send a message to the group."""
         await checkpoint()
 
 
 def get_channel_layer(alias: str = DEFAULT_CHANNEL_LAYER) -> BaseChannelLayer:
-    """Returns a channel layer by alias.
+    """Return a channel layer by alias.
 
     This is a wrapper around :func:`channels.layers.get_channel_layer` that throws an error for
     invalid aliases.

@@ -1,3 +1,5 @@
+"""Site-related ASGI middlewares."""
+
 import asyncio
 from copy import copy
 from typing import Any
@@ -9,15 +11,15 @@ from django.contrib.sites.models import Site
 
 
 class CurrentSiteMiddleware(BaseMiddleware):
-    """
-    Middleware that adds the current Site object to the scope.
-    """
+    """Middleware that adds the current Site object to the scope."""
 
     def __init__(self, inner: ASGIApplication) -> None:
+        """Wrap the ``inner`` ASGI application."""
         super().__init__(inner)
         self._lock = asyncio.Lock()
 
-    async def __call__(self, scope: dict[str, Any], receive: ASGIReceiveCallable, send: ASGISendCallable) -> Any:  # type: ignore[override]
+    async def __call__(self, scope: dict[str, Any], receive: ASGIReceiveCallable, send: ASGISendCallable) -> Any:  # type: ignore[override]  # noqa: ANN401
+        """Add ``site`` to the scope, if missing, and call the inner application."""
         if "site" not in scope:
             async with self._lock:
                 if "site" not in scope:
