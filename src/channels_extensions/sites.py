@@ -1,13 +1,20 @@
 """Site-related ASGI middlewares."""
 
+from __future__ import annotations
+
+# Python 3.15+: defer importing models until first use, so this module can be imported before the app registry is ready.
+__lazy_modules__ = ["django.contrib.sites.models"]
+
 import asyncio
 from copy import copy
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
 from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
 from django.contrib.sites.models import Site
+
+if TYPE_CHECKING:
+    from asgiref.typing import ASGIApplication, ASGIReceiveCallable, ASGISendCallable
 
 
 class CurrentSiteMiddleware(BaseMiddleware):

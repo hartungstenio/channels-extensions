@@ -1,5 +1,10 @@
 """WebSocket consumers backed by ``orjson``."""
 
+from __future__ import annotations
+
+# Python 3.15+: defer importing the optional ``orjson`` extra until first use.
+__lazy_modules__ = ["orjson", "django_orjson"]
+
 from typing import Any
 
 import orjson

@@ -1,11 +1,20 @@
 """ASGI middlewares."""
 
-from typing import Any
+from __future__ import annotations
+
+# Python 3.15+: defer importing ``channels.db`` until first use.
+__lazy_modules__ = ["channels.db"]
+
+from typing import TYPE_CHECKING, Any
 
 from asgiref.sync import ThreadSensitiveContext
-from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 from channels.db import aclose_old_connections
 from channels.middleware import BaseMiddleware
+
+from ._compat import override
+
+if TYPE_CHECKING:
+    from asgiref.typing import ASGIReceiveCallable, ASGISendCallable
 
 
 class ThreadSensitiveMiddleware(BaseMiddleware):
@@ -24,7 +33,8 @@ class ThreadSensitiveMiddleware(BaseMiddleware):
     connection pool for the number of concurrent sockets.
     """
 
-    async def __call__(self, scope: dict[str, Any], receive: ASGIReceiveCallable, send: ASGISendCallable) -> Any:  # type: ignore[override]  # noqa: ANN401
+    @override
+    async def __call__(self, scope: dict[str, Any], receive: ASGIReceiveCallable, send: ASGISendCallable) -> Any:  # type: ignore[override]
         """Call the inner application inside a new thread sensitive context."""
         async with ThreadSensitiveContext():
             try:
