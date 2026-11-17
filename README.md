@@ -66,6 +66,23 @@ application = ProtocolTypeRouter(
 )
 ```
 
+### ThreadSensitiveMiddleware
+By default, every `sync_to_async(thread_sensitive=True)` call (the ORM, the async ORM) runs on a single process-wide thread, so concurrent connections block each other. This middleware runs each connection inside its own `asgiref.sync.ThreadSensitiveContext`, and closes the database connections opened on that context's thread when the connection ends.
+
+Place it as the outermost middleware, for both `http` and `websocket`:
+```python
+application = ProtocolTypeRouter(
+    {
+        "http": ThreadSensitiveMiddleware(get_asgi_application()),
+        "websocket": ThreadSensitiveMiddleware(
+            AllowedHostsOriginValidator(AuthMiddlewareStack(URLRouter(websocket_urlpatterns)))
+        ),
+    }
+)
+```
+
+Each WebSocket that queried the database now holds a connection until it closes, so make sure your connection pool (e.g. `max_size`) fits the number of concurrent sockets.
+
 ## License
 
 `channels-extensions` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.

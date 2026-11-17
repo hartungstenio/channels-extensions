@@ -141,9 +141,10 @@ matrix.django.dependencies = [
   { value = "django>=6.1,<6.2", if = ["6.1"] },
 ]
 
-[tool.hatch.envs.hatch-static-analysis]
-skip-install = false
-config-path = "none"
+[tool.hatch.envs.hatch-check-code]
+dependencies = ["ruff"]
+
+[tool.hatch.envs.hatch-check-fmt]
 dependencies = ["ruff"]
 
 [tool.mypy]
