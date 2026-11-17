@@ -13,11 +13,13 @@ classifiers = [
   "Development Status :: 4 - Beta",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
@@ -118,7 +120,7 @@ features = ["orjson"]
 dependency-groups = ["dev"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
-python = ["3.11", "3.12", "3.13", "3.14"]
+python = ["3.11", "3.12", "3.13", "3.14", "3.15"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
 django = ["5.2"]
@@ -128,10 +130,15 @@ python = ["3.11", "3.12", "3.13", "3.14"]
 django = ["6.0"]
 python = ["3.12", "3.13", "3.14"]
 
+[[tool.hatch.envs.hatch-test.matrix]]
+django = ["6.1"]
+python = ["3.12", "3.13", "3.14", "3.15"]
+
 [tool.hatch.envs.hatch-test.overrides]
 matrix.django.dependencies = [
   { value = "django>=5.2,<6.0", if = ["5.2"] },
   { value = "django>=6.0,<6.1", if = ["6.0"] },
+  { value = "django>=6.1,<6.2", if = ["6.1"] },
 ]
 
 [tool.hatch.envs.hatch-static-analysis]
