@@ -136,8 +136,8 @@ matrix.django.dependencies = [
 
 [tool.hatch.envs.hatch-static-analysis]
 skip-install = false
-config-path = "ruff_defaults.toml"
-dependencies = ["ruff==0.14.10"]
+config-path = "none"
+dependencies = ["ruff"]
 
 [tool.mypy]
 strict = true
@@ -156,16 +156,82 @@ DJANGO_SETTINGS_MODULE = "testproj.settings"
 asyncio_default_fixture_loop_scope = "function"
 
 [tool.ruff]
-extend = "ruff_defaults.toml"
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
 
 [tool.ruff.lint]
-extend-select = ["DJ"]
+select = [
+  "ERA",
+  "YTT",
+  "ANN",
+  "ASYNC",
+  "S",
+  "BLE",
+  "FBT",
+  "B",
+  "A",
+  "COM",
+  "C4",
+  "DTZ",
+  "T10",
+  "DJ",
+  "EM",
+  "EXE",
+  "FIX",
+  "FA",
+  "INT",
+  "ISC",
+  "ICN",
+  "LOG",
+  "G",
+  "INP",
+  "PIE",
+  "T20",
+  "PT",
+  "Q",
+  "RSE",
+  "RET",
+  "SLF",
+  "SIM",
+  "SLOT",
+  "TID",
+  "TD",
+  "TC",
+  "ARG",
+  "PTH",
+  "FLY",
+  "I",
+  "C90",
+  "N",
+  "PERF",
+  "E",
+  "W",
+  "D",
+  "F",
+  "PGH",
+  "PL",
+  "UP",
+  "FURB",
+  "RUF",
+  "TRY",
+]
+ignore = ["COM812", "SIM105"]
+typing-modules = ["channels_extensions._compat"]
 
 [tool.ruff.lint.extend-per-file-ignores]
-"*/migrations/*" = ["RUF012"]
+"*/migrations/*" = ["RUF012", "D"]
+"*/urls.py" = ["D"]
+"tests/*" = ["S101", "D"]
+"testproj/*" = ["D"]
 
 [tool.ruff.lint.flake8-tidy-imports]
 ban-relative-imports = "parents"
 
 [tool.ruff.lint.flake8-tidy-imports.banned-api]
 "asyncio.TaskGroup".msg = "Use asyncio_extensions.TaskGroup instead."
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+ignore-decorators = ["typing.overload"]

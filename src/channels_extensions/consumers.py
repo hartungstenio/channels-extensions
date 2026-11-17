@@ -1,3 +1,5 @@
+"""WebSocket consumers backed by ``orjson``."""
+
 from typing import Any
 
 import orjson
@@ -8,6 +10,8 @@ from channels_extensions._compat import override
 
 
 class JsonWebsocketConsumer(websocket.JsonWebsocketConsumer):
+    """Synchronous JSON WebSocket consumer that encodes and decodes with ``orjson``."""
+
     @override
     @classmethod
     def decode_json(cls, text_data: str) -> Any:
@@ -20,6 +24,8 @@ class JsonWebsocketConsumer(websocket.JsonWebsocketConsumer):
 
 
 class AsyncJsonWebsocketConsumer(websocket.AsyncJsonWebsocketConsumer):
+    """Asynchronous JSON WebSocket consumer that encodes and decodes with ``orjson``."""
+
     @override
     @classmethod
     async def decode_json(cls, text_data: str) -> Any:

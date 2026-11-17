@@ -99,16 +99,18 @@ class TestGetChannelLayer:
     def test_get_channel_layer_default(self) -> None:
         """Test if :func:`get_channel_layer` uses the default alias."""
         channel_layer: BaseChannelLayer = get_channel_layer()
+        expected = 10
 
         assert isinstance(channel_layer, BaseChannelLayer)
-        assert channel_layer.capacity == 10
+        assert channel_layer.capacity == expected
 
     def test_get_channel_layer_by_alias(self) -> None:
         """Test if :func:`get_channel_layer` uses a custom alias."""
         channel_layer: BaseChannelLayer = get_channel_layer("custom")
+        expected = 20
 
         assert isinstance(channel_layer, BaseChannelLayer)
-        assert channel_layer.capacity == 20
+        assert channel_layer.capacity == expected
 
     def test_get_channel_layer_invalid(self, faker: Faker) -> None:
         """Test if :func:`get_channel_layer` raises for invalid alias."""
