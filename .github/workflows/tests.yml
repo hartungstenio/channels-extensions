@@ -28,14 +28,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Setup Hatch
-        run: pipx install hatch
+      - name: Install Hatch
+        run: pip install --upgrade "hatch>=1.18.0"
 
       - name: Run static analysis
-        run: hatch fmt --check
+        run: hatch check code --output-format=github
 
-      - name: Run type checker
-        run: hatch run mypy src/
+      - name: Verify formatting
+        run: hatch check fmt
+
+      - name: Run type checks
+        run: hatch check types
+
+      - name: Check dependencies
+        run: hatch run deptry . --github-output
 
       - name: Run tests
         run: |

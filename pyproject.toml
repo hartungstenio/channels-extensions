@@ -31,7 +31,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.optional-dependencies]
-orjson = ["django-orjson"]
+orjson = ["django-orjson", "orjson"]
 
 [project.urls]
 Documentation = "https://github.com/hartungstenio/channels-extensions#readme"
@@ -41,13 +41,20 @@ Source = "https://github.com/hartungstenio/channels-extensions"
 [dependency-groups]
 dev = [
   "coverage[toml]>=6.5",
-  "django-stubs>=5.2",
+  "deptry",
   "faker",
-  "mypy",
   "pre-commit",
   "pytest",
   "pytest-asyncio",
   "pytest-django",
+  "ruff",
+  { include-group = "types" },
+]
+types = [
+  "django-stubs-ext>=5.2",
+  "django-stubs>=5.2",
+  "mypy",
+  "pyrefly",
   "types-channels",
 ]
 
@@ -89,17 +96,26 @@ exclude = ["/.devcontainer", "/.github"]
 [tool.hatch.version]
 source = "vcs"
 
+[tool.hatch]
+requires-hatch = ">=1.18.0"
+
 [tool.hatch.envs.default]
 features = ["orjson"]
 dependency-groups = ["dev"]
 
+[tool.hatch.envs.hatch-check-types]
+features = ["orjson"]
+dependency-groups = ["types"]
+
+[tool.hatch.envs.hatch-check-types.scripts]
+check = [
+  "pyrefly check{env:HATCH_CHECK_TYPES_ARGS:} {args}",
+  "mypy {args}",
+]
+
 [tool.hatch.envs.hatch-test]
 features = ["orjson"]
-extra-dependencies = [
-  "faker",
-  "pytest-asyncio",
-  "pytest-django",
-]
+dependency-groups = ["dev"]
 
 [[tool.hatch.envs.hatch-test.matrix]]
 python = ["3.11", "3.12", "3.13", "3.14"]
@@ -124,19 +140,15 @@ config-path = "ruff_defaults.toml"
 dependencies = ["ruff==0.14.10"]
 
 [tool.mypy]
+strict = true
+files = ["src"]
 plugins = ["mypy_django_plugin.main"]
+enable_error_code = ["deprecated"]
 
-[[tool.mypy.overrides]]
-module = "channels_extensions.migrations.*"
-ignore_errors = true
-
-[[tool.mypy.overrides]]
-module = "django.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "pytest.*"
-ignore_missing_imports = true
+[tool.pyrefly]
+project-includes = ["src"]
+preset = "strict"
+min-severity = "ignore"
 
 [tool.pytest]
 pythonpath = [".", "src"]
