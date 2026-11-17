@@ -5,7 +5,7 @@ from asyncio_extensions import TaskGroup, checkpoint
 from channels.layers import BaseChannelLayer
 from django.core.exceptions import ImproperlyConfigured
 from faker import Faker
-from pytest_django.fixtures import SettingsWrapper
+from pytest_django.fixtures import Settings
 
 from channels_extensions.layers import DummyChannelLayer, get_channel_layer
 
@@ -79,7 +79,7 @@ class TestDummyChannelLayer:
 
 class TestGetChannelLayer:
     @pytest.fixture(autouse=True)
-    def channel_layers(self, settings: SettingsWrapper) -> None:
+    def channel_layers(self, settings: Settings) -> None:
         """Channel layers to test."""
         settings.CHANNEL_LAYERS = {
             "default": {
