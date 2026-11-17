@@ -1,7 +1,11 @@
 """Channel layer implementations and helpers."""
 
-import re
-from typing import Any
+from __future__ import annotations
+
+# Python 3.15+: defer importing these modules until first use.
+__lazy_modules__ = ["asyncio_extensions", "django.core.exceptions", "django.utils.crypto"]
+
+from typing import TYPE_CHECKING, Any
 
 from asyncio_extensions import checkpoint, sleep_forever
 from channels import DEFAULT_CHANNEL_LAYER
@@ -11,6 +15,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.crypto import get_random_string
 
 from ._compat import override
+
+if TYPE_CHECKING:
+    import re
 
 
 class DummyChannelLayer(BaseChannelLayer):
