@@ -8,6 +8,10 @@ This project adheres to both [Semantic Versioning](https://semver.org/spec/v2.0.
 
 ## [UNRELEASED]
 
+### Added
+
+- `ThreadSensitiveMiddleware` that runs each connection in its own `ThreadSensitiveContext`
+
 ### Fixed
 
 - `JsonWebsocketConsumer.encode_json` now uses `django_orjson.default`, matching `AsyncJsonWebsocketConsumer`
